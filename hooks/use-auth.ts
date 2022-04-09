@@ -1,5 +1,5 @@
 import { authApi } from '@/components/api-client'
-import useSWR from 'swr'
+import useSWR, { SWRResponse } from 'swr'
 import { PublicConfiguration } from 'swr/dist/types'
 
 export function useAuth(options?: Partial<PublicConfiguration>) {
@@ -9,11 +9,13 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
     data: profile,
     error,
     mutate
-  } = useSWR('/profile', {
+  }: SWRResponse<any, any> = useSWR('/profile', {
     dedupingInterval: 60 * 60 * 1000,
     revalidateOnFocus: false,
     ...options
   })
+
+  const firstLoading = profile === undefined && error === undefined
 
   async function login() {
     await authApi.login({
@@ -26,12 +28,13 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
   async function logout() {
     await authApi.logout()
 
-    mutate({}, false)
+    mutate(null, false)
   }
 
   return {
     profile,
     error,
+    firstLoading,
     login,
     logout
   }
