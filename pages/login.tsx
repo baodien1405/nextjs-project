@@ -1,5 +1,6 @@
 import { authApi } from '@/components/api-client'
 import { useAuth } from '@/hooks'
+import { Box, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -34,11 +35,13 @@ export default function LoginPage() {
     }
   }
 
-  console.log(profile)
-
   return (
-    <div>
+    <Box>
       <h1>Login Page</h1>
+
+      <Typography component="h1" variant="h3" color="primary.main">
+        Test
+      </Typography>
 
       <p>Profile: {JSON.stringify(profile || {}, null, 4)}</p>
 
@@ -46,6 +49,6 @@ export default function LoginPage() {
       <button onClick={handleGetProfileClick}>Get Profile</button>
       <button onClick={handleLogoutClick}>Logout</button>
       <button onClick={() => router.push('/about')}>Go to about</button>
-    </div>
+    </Box>
   )
 }
