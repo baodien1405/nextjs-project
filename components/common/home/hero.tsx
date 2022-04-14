@@ -35,7 +35,7 @@ export function HeroSection() {
               minWidth: '240px'
             }}
           >
-            <Image src={avatar} layout="responsive" alt="avatar" />
+            <Image src={avatar} priority={true} layout="responsive" alt="avatar" />
           </Box>
         </Stack>
       </Container>
