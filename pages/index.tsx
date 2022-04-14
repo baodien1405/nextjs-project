@@ -1,3 +1,4 @@
+import { HeroSection } from '@/components/common/home'
 import { MainLayout } from '@/components/layout'
 import { NextPageWithLayout } from '@/models'
 import { Box } from '@mui/material'
@@ -7,7 +8,11 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPageWithLayout = () => {
-  return <Box>Home Page</Box>
+  return (
+    <Box>
+      <HeroSection />
+    </Box>
+  )
 }
 
 Home.Layout = MainLayout
