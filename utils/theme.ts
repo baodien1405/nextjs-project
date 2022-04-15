@@ -8,7 +8,8 @@ export let theme = createTheme({
   },
   palette: {
     primary: {
-      main: '#FF6464'
+      main: '#FF6464',
+      light: '#8695A4'
     },
     secondary: {
       main: '#00A8CC',
