@@ -10,7 +10,7 @@ export function FeatureWorks() {
       title: 'Making a design system from scratch',
       createdAt: '1649928430695',
       updatedAt: '1649928430695',
-      tagList: ['Design', 'Pattern'],
+      tagList: ['Dashboard'],
       shortDescription:
         'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
       fullDescription: '',
@@ -22,7 +22,7 @@ export function FeatureWorks() {
       title: 'Making a design system from scratch',
       createdAt: '1649928430695',
       updatedAt: '1649928430695',
-      tagList: ['Design', 'Pattern'],
+      tagList: ['Illustration'],
       shortDescription:
         'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
       fullDescription: '',
@@ -34,7 +34,7 @@ export function FeatureWorks() {
       title: 'Making a design system from scratch',
       createdAt: '1649928430695',
       updatedAt: '1649928430695',
-      tagList: ['Design', 'Pattern'],
+      tagList: ['Typography'],
       shortDescription:
         'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
       fullDescription: '',
@@ -46,7 +46,7 @@ export function FeatureWorks() {
   return (
     <Box component="section" pt={2} pb={4}>
       <Container>
-        <Typography variant="h5" mb={2}>
+        <Typography variant="h5" mb={2} textAlign="center">
           Feature works
         </Typography>
 
