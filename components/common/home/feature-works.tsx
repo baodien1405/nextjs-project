@@ -46,7 +46,7 @@ export function FeatureWorks() {
   return (
     <Box component="section" pt={2} pb={4}>
       <Container>
-        <Typography variant="h5" mb={2} textAlign="center">
+        <Typography variant="h5" mb={2} textAlign={{ xs: 'center', md: 'left' }}>
           Feature works
         </Typography>
 
