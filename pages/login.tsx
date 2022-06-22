@@ -1,4 +1,4 @@
-import { authApi } from '@/components/api-client'
+import { authApi } from '@/api-client'
 import { useAuth } from '@/hooks'
 import { Box, Typography } from '@mui/material'
 import { useRouter } from 'next/router'

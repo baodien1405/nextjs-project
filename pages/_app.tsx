@@ -1,4 +1,4 @@
-import axiosClient from '@/components/api-client/axios-client'
+import axiosClient from '@/api-client/axios-client'
 import { EmptyLayout } from '@/components/layout'
 import { AppPropsWithLayout } from '@/models'
 import { createEmotionCache, theme } from '@/utils'

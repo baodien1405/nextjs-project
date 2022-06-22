@@ -1,10 +1,9 @@
-import { authApi } from '@/components/api-client'
+import { authApi } from '@/api-client'
 import useSWR, { SWRResponse } from 'swr'
 import { PublicConfiguration } from 'swr/dist/types'
 
 export function useAuth(options?: Partial<PublicConfiguration>) {
   // profile
-
   const {
     data: profile,
     error,
