@@ -10,7 +10,10 @@ import rehypeStringify from 'rehype-stringify'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import remarkToc from 'remark-toc'
+import remarkPrism from 'remark-prism'
 import { unified } from 'unified'
+import Script from 'next/script'
+import { Box } from '@mui/material'
 
 export interface BlogPageProps {
   post: Post
@@ -20,17 +23,21 @@ export default function PostDetailPage({ post }: BlogPageProps) {
   if (!post) return null
 
   return (
-    <Container>
-      <h1>Post Detail Page</h1>
+    <Box>
+      <Container>
+        <h1>Post Detail Page</h1>
 
-      <p>{post.title}</p>
-      <p>{post.author?.name}</p>
-      <p>{post.description}</p>
+        <p>{post.title}</p>
+        <p>{post.author?.name}</p>
+        <p>{post.description}</p>
 
-      <Divider />
+        <Divider />
 
-      <div dangerouslySetInnerHTML={{ __html: post.htmlContent || '' }}></div>
-    </Container>
+        <div dangerouslySetInnerHTML={{ __html: post.htmlContent || '' }}></div>
+      </Container>
+
+      <Script src="/prism.js" strategy="afterInteractive"></Script>
+    </Box>
   )
 }
 
@@ -57,6 +64,7 @@ export const getStaticProps: GetStaticProps<BlogPageProps> = async (
   const file = await unified()
     .use(remarkParse)
     .use(remarkToc, { heading: 'agenda.*' })
+    .use(remarkPrism)
     .use(remarkRehype)
     .use(rehypeDocument, { title: 'Blog details page' })
     .use(rehypeSlug)
