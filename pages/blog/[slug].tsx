@@ -3,10 +3,13 @@ import { getPostList } from '@/utils/posts'
 import { Container, Divider } from '@mui/material'
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 import rehypeDocument from 'rehype-document'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeFormat from 'rehype-format'
 import rehypeStringify from 'rehype-stringify'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
+import remarkToc from 'remark-toc'
 import { unified } from 'unified'
 
 export interface BlogPageProps {
@@ -53,8 +56,11 @@ export const getStaticProps: GetStaticProps<BlogPageProps> = async (
   // parse md to html
   const file = await unified()
     .use(remarkParse)
+    .use(remarkToc, { heading: 'agenda.*' })
     .use(remarkRehype)
     .use(rehypeDocument, { title: 'Blog details page' })
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
     .use(rehypeFormat)
     .use(rehypeStringify)
     .process(post.mdContent || '')
