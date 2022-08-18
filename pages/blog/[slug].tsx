@@ -14,6 +14,7 @@ import remarkPrism from 'remark-prism'
 import { unified } from 'unified'
 import Script from 'next/script'
 import { Box } from '@mui/material'
+import { Seo } from '@/components/common'
 
 export interface BlogPageProps {
   post: Post
@@ -24,9 +25,18 @@ export default function PostDetailPage({ post }: BlogPageProps) {
 
   return (
     <Box>
-      <Container>
-        <h1>Post Detail Page</h1>
+      <Seo
+        data={{
+          title: `${post.title} | Frontend Blog`,
+          description: post.description,
+          url: `${process.env.HOST_URL}`,
+          thumbnailUrl:
+            post.thumbnailUrl ||
+            'https://images.velog.io/images/bigbrothershin/post/c375d3e6-21db-4fa6-9a2a-0c0c66819adf/nextjs%20image.jpeg'
+        }}
+      />
 
+      <Container>
         <p>{post.title}</p>
         <p>{post.author?.name}</p>
         <p>{post.description}</p>
