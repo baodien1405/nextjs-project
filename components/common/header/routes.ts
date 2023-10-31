@@ -5,7 +5,8 @@ export const ROUTE_LIST = [
   },
   {
     label: 'Works',
-    path: '/works'
+    path: '/works',
+    requireLogin: true
   },
   {
     label: 'Blog',
