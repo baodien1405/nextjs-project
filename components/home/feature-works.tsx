@@ -15,7 +15,7 @@ export function FeatureWorks() {
         'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
       fullDescription: '',
       thumbnailUrl:
-        'https://res.cloudinary.com/kimwy/image/upload/v1648712410/learn-nextjs/item1_cbidwn.jpg'
+        'https://res.cloudinary.com/dktajq8sb/image/upload/v1693438420/airbnb-clone/biuplcgyrpsmsq8qzk9z.jpg'
     },
     {
       id: '2',
@@ -27,7 +27,7 @@ export function FeatureWorks() {
         'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
       fullDescription: '',
       thumbnailUrl:
-        'https://res.cloudinary.com/kimwy/image/upload/v1648712410/learn-nextjs/item2_usidpx.jpg'
+        'https://res.cloudinary.com/dktajq8sb/image/upload/v1692765881/airbnb-clone/gzwavi7yzq8h5i3cbfks.webp'
     },
     {
       id: '3',
@@ -39,7 +39,7 @@ export function FeatureWorks() {
         'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
       fullDescription: '',
       thumbnailUrl:
-        'https://res.cloudinary.com/kimwy/image/upload/v1648712410/learn-nextjs/item3_jlfuun.jpg'
+        'https://res.cloudinary.com/dktajq8sb/image/upload/v1692694222/airbnb-clone/jy1gf7lrb3jdfp8hndmj.jpg'
     }
   ]
 

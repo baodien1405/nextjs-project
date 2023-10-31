@@ -1,4 +1,4 @@
-import { FeatureWorks, HeroSection, RecentPosts } from '@/components/common/home'
+import { FeatureWorks, HeroSection, RecentPosts } from '@/components/home'
 import { Seo } from '@/components/common'
 import { MainLayout } from '@/components/layout'
 import { NextPageWithLayout } from '@/models'
