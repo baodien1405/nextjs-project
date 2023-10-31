@@ -1,16 +1,14 @@
-import useSWR, { SWRResponse } from 'swr'
-import { PublicConfiguration } from 'swr/dist/types'
+import useSWR, { SWRConfiguration } from 'swr'
 
 import { authApi } from '@/api-client'
-import { LoginPayload } from '@/models'
+import { LoginPayload, UserProfile } from '@/models'
 
-export function useAuth(options?: Partial<PublicConfiguration>) {
-  // profile
+export function useAuth(options?: Partial<SWRConfiguration>) {
   const {
     data: profile,
     error,
     mutate
-  }: SWRResponse<any, any> = useSWR('/profile', {
+  } = useSWR<UserProfile | null>('/profile', {
     dedupingInterval: 60 * 60 * 1000,
     revalidateOnFocus: false,
     ...options

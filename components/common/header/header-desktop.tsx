@@ -1,9 +1,9 @@
 import { Box, Container, Link as MuiLink, Stack } from '@mui/material'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
-import { ROUTE_LIST } from './routes'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
+
+import { ROUTE_LIST } from './routes'
 import { useAuth } from '@/hooks'
 
 export function HeaderDesktop() {
