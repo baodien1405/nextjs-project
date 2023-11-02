@@ -6,8 +6,10 @@ import { CacheProvider } from '@emotion/react'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
 import { SWRConfig } from 'swr'
+import { ToastContainer } from 'react-toastify'
 import '../styles/globals.css'
 import '../styles/prism.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -23,6 +25,7 @@ function MyApp({
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <ToastContainer />
 
         <SWRConfig value={{ fetcher: (url) => axiosClient.get(url), shouldRetryOnError: false }}>
           <Layout>

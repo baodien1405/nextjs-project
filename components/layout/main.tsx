@@ -1,9 +1,10 @@
+import { Stack, Box } from '@mui/material'
+import dynamic from 'next/dynamic'
+
 import { LayoutProps } from '@/models'
-import { Container, Stack } from '@mui/material'
-import { Box } from '@mui/system'
-import Link from 'next/link'
-import React from 'react'
-import { Footer, Header } from '../common'
+import { Footer } from '../common'
+
+const Header = dynamic(() => import('../common/header'), { ssr: false })
 
 export function MainLayout({ children }: LayoutProps) {
   return (
