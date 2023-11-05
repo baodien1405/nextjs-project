@@ -1,26 +1,59 @@
 import { Box, Container, Pagination, Stack, Typography } from '@mui/material'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent } from 'react'
 
 import { MainLayout } from '@/components/layout'
 import { useWorkList } from '@/hooks'
-import { ListParams } from '@/models'
-import { WorkList } from '@/components/work'
+import { ListParams, WorkFiltersPayload } from '@/models'
+import { WorkFilters, WorkList } from '@/components/work'
+import { useRouter } from 'next/router'
 
 export default function WorksPage() {
-  const [filters, setFilters] = useState<Partial<ListParams>>({
+  const router = useRouter()
+  const filters: Partial<ListParams> = {
     _page: 1,
-    _limit: 3
-  })
-  const { data, isLoading } = useWorkList({ params: filters })
+    _limit: 3,
+    ...router.query
+  }
+  const initFiltersPayload: WorkFiltersPayload = {
+    search: filters.title_like || ''
+  }
+
+  const { data, isLoading } = useWorkList({ params: filters, enabled: router.isReady })
 
   const { _page, _limit, _totalRows } = data?.pagination || {}
   const totalPages = Boolean(_totalRows) ? Math.ceil(_totalRows / _limit) : 0
 
-  const handlePageChange = (event: ChangeEvent<unknown>, newPage: number) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      _page: newPage
-    }))
+  const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: {
+          ...filters,
+          _page: value
+        }
+      },
+      undefined,
+      {
+        shallow: true
+      }
+    )
+  }
+
+  const handleFiltersChange = (newFilters: WorkFiltersPayload) => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: {
+          ...filters,
+          _page: 1,
+          title_like: newFilters.search
+        }
+      },
+      undefined,
+      {
+        shallow: true
+      }
+    )
   }
 
   return (
@@ -31,6 +64,10 @@ export default function WorksPage() {
             Work
           </Typography>
         </Box>
+
+        {router.isReady && (
+          <WorkFilters initialValues={initFiltersPayload} onSubmit={handleFiltersChange} />
+        )}
 
         <WorkList workList={data?.data || []} loading={isLoading} />
 

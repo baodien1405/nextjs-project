@@ -28,7 +28,7 @@ export function WorkList({ workList, loading }: WorkListProps) {
 
   if (workList.length === 0) {
     return (
-      <Box textAlign="center" mt={8}>
+      <Box textAlign="center" mt={6}>
         <Image
           src={
             'https://res.cloudinary.com/dktajq8sb/image/upload/v1698912492/nextjs-blog/data-not-found_afmnmk.jpg'
