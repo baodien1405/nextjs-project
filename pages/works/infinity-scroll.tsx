@@ -88,8 +88,9 @@ export default function WorksPage() {
               variant="contained"
               onClick={() => setSize((x) => x + 1)}
               disabled={loadingMore}
+              startIcon={loadingMore ? <CircularProgress color="inherit" size="1em" /> : null}
             >
-              Load more {loadingMore && <CircularProgress size={24} />}
+              Load more
             </Button>
           </Box>
         )}

@@ -1,7 +1,9 @@
+import { path } from '@/constants'
 import { Work } from '@/models'
 import { Box, Chip, Stack, Typography } from '@mui/material'
 import { format } from 'date-fns'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 export interface WorkCardProps {
@@ -9,11 +11,14 @@ export interface WorkCardProps {
 }
 
 export function WorkCard({ work }: WorkCardProps) {
+  const router = useRouter()
+
   return (
     <Stack
       direction={{ xs: 'column', md: 'row' }}
-      // justifyContent={{ xs: 'center', md: 'flex-start' }}
       spacing={2}
+      sx={{ cursor: 'pointer' }}
+      onClick={() => router.push(`${path.works}/${work.id}`)}
     >
       <Box width={{ xs: '100%', md: '246px' }} flexShrink={0}>
         <Image

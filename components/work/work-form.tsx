@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 import { useTagList } from '@/hooks'
 import { WorkPayload } from '@/models'
-import { AutocompleteField, InputField } from '../form'
+import { AutocompleteField, InputField, PhotoField } from '../form'
 import { Button } from '@mui/material'
 
 export interface WorkFormProps {
@@ -17,7 +17,22 @@ export function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
   const schema = yup.object().shape({
     title: yup.string().required('Please enter your title'),
     shortDescription: yup.string().required('Please enter your description'),
-    tagList: yup.array().of(yup.string()).min(1, 'Please select at least one')
+    tagList: yup.array().of(yup.string()).min(1, 'Please select at least one'),
+    thumbnail: yup
+      .object()
+      .nullable()
+      .test((value: any, context) => {
+        if (Boolean(initialValues?.id) || Boolean(value?.file)) return true
+
+        return context.createError({ message: 'Please select an image.' })
+      })
+      .test('test-size', 'Maximum file exceeded. Please select another file.', (value: any) => {
+        const fileSize = value?.file?.['size'] || 0
+        const MB_TO_BYTES = 1024 * 1024
+        const MAX_SIZE = 3 * MB_TO_BYTES // 3MB
+
+        return fileSize <= MAX_SIZE
+      })
   })
 
   const { control, handleSubmit } = useForm<Partial<WorkPayload>>({
@@ -25,6 +40,7 @@ export function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
       title: '',
       shortDescription: '',
       tagList: [],
+      thumbnail: initialValues?.id ? { file: null, previewUrl: initialValues.thumbnailUrl } : null,
       ...initialValues
     },
     resolver: yupResolver(schema)
@@ -62,7 +78,9 @@ export function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
         isOptionEqualToValue={(option, value) => option === value}
       />
 
-      <Button variant="contained" type="submit" size="small">
+      <PhotoField name="thumbnail" label="Thumbnail" control={control} />
+
+      <Button variant="contained" type="submit" size="small" sx={{ fontSize: '18px' }}>
         {initialValues?.id ? 'Save' : 'Submit'}
       </Button>
     </Box>
