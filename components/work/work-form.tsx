@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 import { useTagList } from '@/hooks'
 import { WorkPayload } from '@/models'
-import { AutocompleteField, InputField, PhotoField } from '../form'
+import { AutocompleteField, EditorField, InputField, PhotoField } from '../form'
 import { Button } from '@mui/material'
 
 export interface WorkFormProps {
@@ -32,7 +32,8 @@ export function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
         const MAX_SIZE = 3 * MB_TO_BYTES // 3MB
 
         return fileSize <= MAX_SIZE
-      })
+      }),
+    fullDescription: yup.string().required('Please enter your description')
   })
 
   const { control, handleSubmit } = useForm<Partial<WorkPayload>>({
@@ -41,6 +42,7 @@ export function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
       shortDescription: '',
       tagList: [],
       thumbnail: initialValues?.id ? { file: null, previewUrl: initialValues.thumbnailUrl } : null,
+      fullDescription: '',
       ...initialValues
     },
     resolver: yupResolver(schema)
@@ -79,6 +81,8 @@ export function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
       />
 
       <PhotoField name="thumbnail" label="Thumbnail" control={control} />
+
+      <EditorField name="fullDescription" label="Full description" control={control} />
 
       <Button variant="contained" type="submit" size="small" sx={{ fontSize: '18px' }}>
         {initialValues?.id ? 'Save' : 'Submit'}

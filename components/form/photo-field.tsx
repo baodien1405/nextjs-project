@@ -20,7 +20,7 @@ export function PhotoField<T extends FieldValues>({ name, control, label }: Phot
     control
   })
 
-  const previewUrl = value?.previewUrl || DEFAULT_THUMBNAIL_URL
+  const previewUrl = value?.['previewUrl'] || DEFAULT_THUMBNAIL_URL
   const inputId = `photo-field-${name}`
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
