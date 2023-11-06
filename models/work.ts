@@ -9,6 +9,8 @@ export interface Work {
   thumbnailUrl: string
 }
 
+export interface WorkPayload extends Work {}
+
 export interface WorkFiltersPayload {
   search: string
   tagList_like?: string
