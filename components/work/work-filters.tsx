@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 
 import { WorkFiltersPayload } from '@/models'
 import { Search } from '@mui/icons-material'
-import { InputField } from '../form'
+import { AutocompleteField, InputField } from '../form'
 
 export interface WorkFiltersProps {
   initialValues?: WorkFiltersPayload
@@ -39,6 +39,16 @@ export function WorkFilters({ initialValues, onSubmit }: WorkFiltersProps) {
           )
         }}
         onChange={debounceSearchChange}
+      />
+
+      <AutocompleteField
+        name="selectedTagList"
+        control={control}
+        label="Filter by category"
+        placeholder="Category"
+        options={[{ title: 'easy', key: 'ez' }]}
+        getOptionLabel={(option) => option.key}
+        isOptionEqualToValue={(option, value) => option.key === value.key}
       />
     </Box>
   )
