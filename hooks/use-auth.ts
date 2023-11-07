@@ -1,8 +1,10 @@
 import useSWR, { SWRConfiguration } from 'swr'
+import { toast } from 'react-toastify'
 
 import { authApi } from '@/api-client'
 import { LoginPayload, UserProfile } from '@/models'
 import { StorageKeys } from '@/constants'
+import { getErrorMessage } from '@/utils'
 
 const getUserInfo = (): UserProfile | null => {
   try {
@@ -26,7 +28,8 @@ export function useAuth(options?: Partial<SWRConfiguration>) {
       localStorage.setItem(StorageKeys.USER_INFO, JSON.stringify(data))
     },
     onError(error) {
-      console.log(error)
+      const message = getErrorMessage(error)
+      toast.error(message)
       logout()
     }
   })

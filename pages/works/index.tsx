@@ -1,4 +1,4 @@
-import { Box, Container, Pagination, Skeleton, Stack, Typography } from '@mui/material'
+import { Box, Button, Container, Pagination, Skeleton, Stack, Typography } from '@mui/material'
 import { ChangeEvent } from 'react'
 
 import { MainLayout } from '@/components/layout'
@@ -6,6 +6,7 @@ import { useWorkList } from '@/hooks'
 import { ListParams, WorkFiltersPayload } from '@/models'
 import { WorkFilters, WorkList } from '@/components/work'
 import { useRouter } from 'next/router'
+import { path } from '@/constants'
 
 export default function WorksPage() {
   const router = useRouter()
@@ -61,11 +62,20 @@ export default function WorksPage() {
   return (
     <Box>
       <Container>
-        <Box mb={4} mt={8}>
+        <Stack mb={4} mt={8} direction="row" justifyContent="space-between" alignItems="center">
           <Typography component="h1" variant="h3" fontWeight="bold">
             Work
           </Typography>
-        </Box>
+
+          <Button
+            variant="contained"
+            size="small"
+            sx={{ fontSize: '18px' }}
+            onClick={() => router.push(`${path.works}/add`)}
+          >
+            Add new work
+          </Button>
+        </Stack>
 
         {router.isReady ? (
           <WorkFilters initialValues={initFiltersPayload} onSubmit={handleFiltersChange} />

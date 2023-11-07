@@ -4,8 +4,9 @@ import Script from 'next/script'
 import { toast } from 'react-toastify'
 
 import { MainLayout } from '@/components/layout'
-import { useWorkDetails } from '@/hooks'
+import { useWorkAdd, useWorkDetails } from '@/hooks'
 import { WorkForm } from '@/components/work'
+import { getErrorMessage } from '@/utils'
 
 export default function AddEditWorkPage() {
   const router = useRouter()
@@ -17,12 +18,23 @@ export default function AddEditWorkPage() {
     enabled: router.isReady && !isAddMode
   })
 
+  const addNewWork = useWorkAdd()
+
   const handleSubmit = async (payload: FormData) => {
     try {
-      await updateWork(payload)
-      toast.success('Update work successfully')
+      let newWork = null
+      if (isAddMode) {
+        newWork = await addNewWork(payload)
+        toast.success(`Add work successfully, ${newWork?.id}`)
+      } else {
+        newWork = await updateWork(payload)
+        toast.success('Update work successfully')
+      }
+
+      router.push('/works?_page=1&_limit=3')
     } catch (error) {
-      console.log(error)
+      const message = getErrorMessage(error)
+      toast.error(message)
     }
   }
 

@@ -15,7 +15,7 @@ export function useWorkList({ params, enabled, options }: UseWorkListProps) {
     enabled ? [QueryKeys.GET_WORK_LIST, params] : null,
     () => workApi.getAll(params),
     {
-      dedupingInterval: 30 * 1000,
+      dedupingInterval: 60 * 1000, // 60s
       keepPreviousData: true,
       fallbackData: {
         data: [],
