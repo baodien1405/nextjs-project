@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import { path } from '@/constants'
 import { useAuth } from '@/hooks'
 import { Spinner } from './spinner'
+import { encodeUrl } from '@/utils'
 
 export interface AuthProps {
   children: any
@@ -18,7 +19,9 @@ export function Auth({ children, requireLogin = false }: AuthProps) {
     // do nothing if not require login
     if (!requireLogin) return
 
-    if (!firstLoading && !profile?.username) router.replace(path.login)
+    if (!firstLoading && !profile?.username) {
+      router.replace(`${path.login}?back_to=${encodeUrl(router.asPath)}`)
+    }
   }, [profile, firstLoading, router, requireLogin])
 
   if (requireLogin && !profile?.username) return <Spinner />

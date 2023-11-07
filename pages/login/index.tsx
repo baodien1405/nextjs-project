@@ -5,8 +5,9 @@ import React from 'react'
 import { LoginForm } from '@/components/auth'
 import { useAuth } from '@/hooks'
 import { LoginPayload } from '@/models'
-import { getErrorMessage } from '@/utils'
+import { decodeUrl, getErrorMessage } from '@/utils'
 import { toast } from 'react-toastify'
+import { path } from '@/constants'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -17,7 +18,9 @@ export default function LoginPage() {
   const handleLoginSubmit = async (payload: LoginPayload) => {
     try {
       await login(payload)
-      router.push('/')
+
+      const backUrl = router.query?.back_to ? decodeUrl(router.query?.back_to as string) : path.home
+      router.push(backUrl)
     } catch (error) {
       const message = getErrorMessage(error)
       toast.error(message)
