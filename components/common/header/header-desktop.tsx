@@ -5,6 +5,8 @@ import { useRouter } from 'next/router'
 
 import { ROUTE_LIST } from './routes'
 import { useAuth } from '@/hooks'
+import { path } from '@/constants'
+import { encodeUrl } from '@/utils'
 
 export function HeaderDesktop() {
   const router = useRouter()
@@ -28,7 +30,7 @@ export function HeaderDesktop() {
           ))}
 
           {!isLoggedIn && (
-            <Link href="/login" passHref>
+            <Link href={`${path.login}?back_to=${encodeUrl(router.asPath)}`} passHref>
               <MuiLink sx={{ ml: 2, fontWeight: 'medium' }}>Login</MuiLink>
             </Link>
           )}

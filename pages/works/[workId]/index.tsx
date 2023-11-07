@@ -7,6 +7,7 @@ import { MainLayout } from '@/components/layout'
 import { useWorkAdd, useWorkDetails } from '@/hooks'
 import { WorkForm } from '@/components/work'
 import { getErrorMessage } from '@/utils'
+import { path } from '@/constants'
 
 export default function AddEditWorkPage() {
   const router = useRouter()
@@ -31,7 +32,7 @@ export default function AddEditWorkPage() {
         toast.success('Update work successfully')
       }
 
-      router.push('/works?_page=1&_limit=3')
+      router.push(`${path.works}/${newWork?.id}/details`)
     } catch (error) {
       const message = getErrorMessage(error)
       toast.error(message)

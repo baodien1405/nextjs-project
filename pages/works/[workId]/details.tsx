@@ -1,17 +1,20 @@
-import { Box, Chip, Container, Stack, Typography } from '@mui/material'
+import { Box, Button, Chip, Container, Stack, Typography } from '@mui/material'
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 import { useRouter } from 'next/router'
+import sanitizeHtml from 'sanitize-html'
 
 import { MainLayout } from '@/components/layout'
 import { Work } from '@/models'
+import { useAuth } from '@/hooks'
+import { path } from '@/constants'
 
 export interface WorkPageProps {
   work: Work
 }
 
 export default function WorkDetailsPage({ work }: WorkPageProps) {
-  console.log('🚀 ~ WorkDetailsPage ~ work:', work)
   const router = useRouter()
+  const { isLoggedIn } = useAuth()
 
   if (router.isFallback) {
     return <div style={{ fontSize: '2rem', textAlign: 'center' }}>Loading...</div>
@@ -22,11 +25,22 @@ export default function WorkDetailsPage({ work }: WorkPageProps) {
   return (
     <Box>
       <Container>
-        <Box mb={4} mt={8}>
+        <Stack mb={4} mt={8} direction="row" justifyContent="space-between" alignItems="center">
           <Typography component="h1" variant="h3" fontWeight="bold">
-            Work Details Page
+            {work.title}
           </Typography>
-        </Box>
+
+          {isLoggedIn && (
+            <Button
+              variant="contained"
+              size="small"
+              sx={{ fontSize: '18px' }}
+              onClick={() => router.push(`${path.works}/${work.id}`)}
+            >
+              Edit
+            </Button>
+          )}
+        </Stack>
 
         <Stack direction="row" alignItems="center" my={2}>
           <Chip
@@ -73,6 +87,11 @@ export const getStaticProps: GetStaticProps<WorkPageProps> = async (
 
   const response = await fetch(`${process.env.API_URL}/api/works/${workId}`)
   const data = await response.json()
+
+  // sanitize HTML
+  data.fullDescription = sanitizeHtml(data.fullDescription, {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img'])
+  })
 
   return {
     props: {

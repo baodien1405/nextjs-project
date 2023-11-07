@@ -24,6 +24,8 @@ export function useWorkDetails({ workId, enabled, options }: UseWorkDetailsProps
   const updateWork = async (payload: FormData) => {
     const newWork = await workApi.update(payload)
     swrResponse.mutate(newWork)
+
+    return newWork
   }
 
   return { ...swrResponse, updateWork }
