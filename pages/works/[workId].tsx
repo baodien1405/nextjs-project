@@ -1,24 +1,29 @@
 import { Box, Container, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
+import { toast } from 'react-toastify'
 
 import { MainLayout } from '@/components/layout'
 import { useWorkDetails } from '@/hooks'
 import { WorkForm } from '@/components/work'
-import { WorkPayload } from '@/models'
 
 export default function AddEditWorkPage() {
   const router = useRouter()
   const { workId } = router.query
   const isAddMode = workId === 'add'
 
-  const { data: workDetails, isLoading } = useWorkDetails({
+  const { data: workDetails, updateWork } = useWorkDetails({
     workId: workId as string,
     enabled: router.isReady && !isAddMode
   })
 
-  const handleAddEditForm = (payload: Partial<WorkPayload>) => {
-    console.log('🚀 ~ handleAddEditForm ~ payload:', payload)
+  const handleSubmit = async (payload: FormData) => {
+    try {
+      await updateWork(payload)
+      toast.success('Update work successfully')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -32,7 +37,7 @@ export default function AddEditWorkPage() {
 
         <Box>
           {(isAddMode || Boolean(workDetails)) && (
-            <WorkForm initialValues={workDetails} onSubmit={handleAddEditForm} />
+            <WorkForm initialValues={workDetails} onSubmit={handleSubmit} />
           )}
         </Box>
       </Container>

@@ -2,15 +2,15 @@ import { Box } from '@mui/system'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { Button, CircularProgress } from '@mui/material'
 
 import { useTagList } from '@/hooks'
 import { WorkPayload } from '@/models'
 import { AutocompleteField, EditorField, InputField, PhotoField } from '../form'
-import { Button } from '@mui/material'
 
 export interface WorkFormProps {
   initialValues?: Partial<WorkPayload>
-  onSubmit?: (payload: Partial<WorkPayload>) => void
+  onSubmit?: (payload: FormData) => void
 }
 
 export function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
@@ -36,7 +36,11 @@ export function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
     fullDescription: yup.string().required('Please enter your description')
   })
 
-  const { control, handleSubmit } = useForm<Partial<WorkPayload>>({
+  const {
+    control,
+    formState: { isSubmitting },
+    handleSubmit
+  } = useForm<Partial<WorkPayload>>({
     defaultValues: {
       title: '',
       shortDescription: '',
@@ -51,8 +55,37 @@ export function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
   const { data } = useTagList({})
   const tagList = data?.data || []
 
-  async function handleFormSubmit(payload: Partial<WorkPayload>) {
-    if (!payload) return
+  async function handleFormSubmit(formValues: Partial<WorkPayload>) {
+    if (!formValues) return
+
+    const payload = new FormData()
+    // id
+    if (formValues.id) {
+      payload.set('id', formValues.id)
+    }
+
+    // thumbnail
+    if (formValues.thumbnail?.file) {
+      payload.set('thumbnail', formValues.thumbnail?.file)
+    }
+
+    // tagList
+    formValues.tagList?.forEach((tag) => {
+      payload.append('tagList', tag)
+    })
+
+    // title, short description, full description
+    const keyList: Array<keyof Partial<WorkPayload>> = [
+      'title',
+      'shortDescription',
+      'fullDescription'
+    ]
+    keyList.forEach((name) => {
+      if (initialValues?.[name] !== formValues[name]) {
+        payload.set(name, formValues[name] as string)
+      }
+    })
+
     await onSubmit?.(payload)
   }
 
@@ -84,7 +117,14 @@ export function WorkForm({ initialValues, onSubmit }: WorkFormProps) {
 
       <EditorField name="fullDescription" label="Full description" control={control} />
 
-      <Button variant="contained" type="submit" size="small" sx={{ fontSize: '18px' }}>
+      <Button
+        variant="contained"
+        type="submit"
+        size="small"
+        sx={{ fontSize: '18px' }}
+        disabled={isSubmitting}
+        startIcon={isSubmitting ? <CircularProgress color="inherit" size="1em" /> : null}
+      >
         {initialValues?.id ? 'Save' : 'Submit'}
       </Button>
     </Box>
