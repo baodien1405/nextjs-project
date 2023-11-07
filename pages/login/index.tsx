@@ -1,12 +1,11 @@
 import { Box, Paper, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
-import React from 'react'
+import { toast } from 'react-toastify'
 
 import { LoginForm } from '@/components/auth'
 import { useAuth } from '@/hooks'
 import { LoginPayload } from '@/models'
 import { decodeUrl, getErrorMessage } from '@/utils'
-import { toast } from 'react-toastify'
 import { path } from '@/constants'
 
 export default function LoginPage() {
