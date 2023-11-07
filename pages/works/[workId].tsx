@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
+import Script from 'next/script'
 
 import { MainLayout } from '@/components/layout'
 import { useWorkDetails } from '@/hooks'
@@ -35,6 +36,8 @@ export default function AddEditWorkPage() {
           )}
         </Box>
       </Container>
+
+      <Script src="https://widget.cloudinary.com/v2.0/global/all.js" strategy="afterInteractive" />
     </Box>
   )
 }
