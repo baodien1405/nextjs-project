@@ -38,6 +38,8 @@ export default function AddEditWorkPage() {
     }
   }
 
+  if (!router.isReady) return null
+
   return (
     <Box>
       <Container>
@@ -60,3 +62,4 @@ export default function AddEditWorkPage() {
 }
 
 AddEditWorkPage.Layout = MainLayout
+AddEditWorkPage.requireLogin = true

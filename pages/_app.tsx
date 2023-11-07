@@ -7,6 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
 import { SWRConfig } from 'swr'
 import { ToastContainer } from 'react-toastify'
+import { Auth } from '@/components/common'
 import '../styles/globals.css'
 import '../styles/prism.css'
 import 'react-toastify/dist/ReactToastify.css'
@@ -29,7 +30,9 @@ function MyApp({
 
         <SWRConfig value={{ fetcher: (url) => axiosClient.get(url), shouldRetryOnError: false }}>
           <Layout>
-            <Component {...pageProps} />
+            <Auth requireLogin={Component.requireLogin ?? false}>
+              <Component {...pageProps} />
+            </Auth>
           </Layout>
         </SWRConfig>
       </ThemeProvider>

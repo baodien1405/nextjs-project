@@ -2,7 +2,7 @@ import { Box, Button, Container, Pagination, Skeleton, Stack, Typography } from 
 import { ChangeEvent } from 'react'
 
 import { MainLayout } from '@/components/layout'
-import { useWorkList } from '@/hooks'
+import { useAuth, useWorkList } from '@/hooks'
 import { ListParams, WorkFiltersPayload } from '@/models'
 import { WorkFilters, WorkList } from '@/components/work'
 import { useRouter } from 'next/router'
@@ -20,6 +20,7 @@ export default function WorksPage() {
     selectedTagList: filters.tagList_like?.split('|') || []
   }
 
+  const { isLoggedIn } = useAuth()
   const { data, isLoading } = useWorkList({ params: filters, enabled: router.isReady })
 
   const { _page, _limit, _totalRows } = data?.pagination || {}
@@ -67,14 +68,16 @@ export default function WorksPage() {
             Work
           </Typography>
 
-          <Button
-            variant="contained"
-            size="small"
-            sx={{ fontSize: '18px' }}
-            onClick={() => router.push(`${path.works}/add`)}
-          >
-            Add new work
-          </Button>
+          {isLoggedIn && (
+            <Button
+              variant="contained"
+              size="small"
+              sx={{ fontSize: '18px' }}
+              onClick={() => router.push(`${path.works}/add`)}
+            >
+              Add new work
+            </Button>
+          )}
         </Stack>
 
         {router.isReady ? (

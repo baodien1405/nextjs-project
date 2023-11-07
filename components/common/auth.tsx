@@ -1,20 +1,27 @@
-import { useAuth } from '@/hooks'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 
+import { path } from '@/constants'
+import { useAuth } from '@/hooks'
+import { Spinner } from './spinner'
+
 export interface AuthProps {
   children: any
+  requireLogin?: boolean
 }
 
-export function Auth({ children }: AuthProps) {
+export function Auth({ children, requireLogin = false }: AuthProps) {
   const router = useRouter()
   const { profile, firstLoading } = useAuth()
 
   useEffect(() => {
-    if (!firstLoading && !profile?.username) router.push('/login')
-  }, [profile, firstLoading, router])
+    // do nothing if not require login
+    if (!requireLogin) return
 
-  if (!profile?.username) return <div>Loading...</div>
+    if (!firstLoading && !profile?.username) router.replace(path.login)
+  }, [profile, firstLoading, router, requireLogin])
+
+  if (requireLogin && !profile?.username) return <Spinner />
 
   return <div>{children}</div>
 }
