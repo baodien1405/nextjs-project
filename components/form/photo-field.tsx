@@ -1,7 +1,7 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useEffect } from 'react'
 import { Box, FormHelperText, Typography } from '@mui/material'
 import Image from 'next/image'
-import { Control, FieldValues, Form, Path, useController } from 'react-hook-form'
+import { Control, FieldValues, Path, useController } from 'react-hook-form'
 
 import { DEFAULT_THUMBNAIL_URL } from '@/constants'
 
@@ -23,6 +23,14 @@ export function PhotoField<T extends FieldValues>({ name, control, label }: Phot
   const previewUrl = value?.['previewUrl'] || DEFAULT_THUMBNAIL_URL
   const inputId = `photo-field-${name}`
 
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl)
+      }
+    }
+  }, [previewUrl])
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -32,6 +40,9 @@ export function PhotoField<T extends FieldValues>({ name, control, label }: Phot
       file,
       previewUrl: url
     })
+
+    // clear input file value to allow select duplicate file
+    e.target.value = ''
   }
 
   return (
